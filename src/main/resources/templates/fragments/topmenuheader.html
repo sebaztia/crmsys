@@ -1,0 +1,46 @@
+<header>
+    <div class="page-header">
+        <div class="page-header-top">
+            <div class="container">
+                <div class="page-logo">
+                    <a th:href="@{/}">
+                        <img th:src="@{/images/steeleroselogo.png}" alt="logo" style="margin-top:5px"/>
+                    </a>
+                </div>
+                <a href="javascript:;" class="menu-toggler"></a>
+            </div>
+        </div>
+        <div class="page-header-menu">
+            <div class="container">
+                <div class="hor-menu  ">
+                    <ul class="nav navbar-nav">
+                        <li class="menu-dropdown classic-menu-dropdown">
+                            <a th:href="@{/home}"> Home
+                            </a>
+                        </li>
+                        <li th:classappend="${module == 'dashboard' ? 'active' : ''}">
+                            <a th:href = "@{/showWillsPage}"> Dashboard </a>
+                        </li>
+                        <li th:classappend="${module == 'enquiry' ? 'active' : ''}">
+                            <a th:href = "@{/callList}"> Enquiry </a>
+                        </li>
+                        <li th:classappend="${module == 'messages' ? 'active' : ''}">
+                            <a th:href = "@{/legacyClient}"> Legacy Client </a>
+                        </li>
+                        <li th:classappend="${module == 'tasks' ? 'active' : ''}">
+                            <a href="#" th:href="@{/showArchive}"> Archive </a>
+                        </li>
+                     </ul>
+                    <ul class="nav navbar-nav pull-right">
+                        <li th:if="${#authorization.expression('!isAuthenticated()')}">
+                            <a href="/signin" th:href="@{/signin}">
+                                <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Sign in
+                            </a>
+                        </li>
+                        <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;&nbsp;Logout </a></li>
+                    </ul>
+                 </div>
+             </div>
+         </div>
+    </div>
+</header>

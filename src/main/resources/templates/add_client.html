@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Steele Rose CRM Management</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <meta content="This shows CRM Steele Rose" name="description" />
+    <object th:include="fragments/head :: head" th:remove="tag"></object>
+
+    <link th:href="@{/assets/pages/css/profile.min.css}" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="page-container-bg-solid">
+<div th:include="fragments/topmenuheader :: header"></div>
+
+<div class="panel panel-default">
+    <div th:if="${client.id == null}" class="panel-heading"><h4>New Client</h4></div>
+    <div th:unless="${client.id == null}" class="panel-heading"><h4>Edit Client</h4></div>
+    <div class="panel-body">
+        <form th:object="${client}" th:action="@{clientSave}" action="#" method="post">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel-heading">Company Info</div>
+                        <div class="panel-body" style="padding-left: 5px;">
+                        Name: <b th:text="${company.name}" /> <br/>
+                        Contact Person: <b th:text="${company.contact}" /> <br/>
+                        Telephone: <b th:text="${company.telephone}" /> <br/>
+                        Email: <span th:text="${company.email}" /><br/>
+                        URL: <b th:text="${company.website}" /> <br/>
+                        Address: <span th:text="${company.address}" /><br/>
+                        <br/>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="hidden" class="form-control" id="company" th:field="*{company}"/>
+                        <input type="hidden" class="form-control" id="id" th:field="*{id}"/>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'has-error':''">
+                            <label for="name">Name: &nbsp;</label><span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
+                            <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Name"/>
+                        </div>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('phone')}? 'has-error':''">
+                            <label for="phone">Phone: &nbsp;</label><span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="text-danger"></span>
+                            <input type="text" class="form-control" id="phone" th:field="*{phone}" placeholder="Phone"/>
+                        </div>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('contact')}? 'has-error':''">
+                            <label for="name">Contact Person: &nbsp;</label><span th:if="${#fields.hasErrors('contact')}" th:errors="*{contact}" class="text-danger"></span>
+                            <input type="text" class="form-control" id="contact" th:field="*{contact}" placeholder="Contact Person"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email: &nbsp;</label>
+                            <input type="text" class="form-control" id="email" th:field="*{email}"
+                                   placeholder="Email"/>
+                        </div>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('address')}? 'has-error':''">
+                            <label> Address: &nbsp; </label><span th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="text-danger"></span>
+                            <textarea  rows = "10" cols = "80" th:field = "*{address}" placeholder="Address" class="form-control"></textarea>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-3"><button type="submit" class="btn btn-primary" value="Save">Save</button></div>
+                    <div class="col-md-3"><a class="btn btn-danger" th:href="@{/company}">Cancel</a></div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div th:include="fragments/homefooter :: footer"></div>
+
+</body>
+</html>

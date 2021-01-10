@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout.html}">
+<head>
+    <title>Edit Call List</title>
+    <script type="text/javascript" language="JavaScript">
+        <!--
+        function checkEmailBoxes() {
+            var email_action = document.getElementById('email_action');
+            var email_status = document.getElementById('email_status');
+
+            if (email_action.checked === false && email_status.checked === true) {
+                alert ('Email Action Required at First');
+                email_status.checked = false;
+                return false;
+            }
+        }
+
+        function checkCallBoxes() {
+            var call_action = document.getElementById('call_action');
+            var call_status = document.getElementById('call_status');
+
+            if (call_action.checked === false && call_status.checked === true) {
+                alert ('Call Action Required at First');
+                call_status.checked = false;
+                return false;
+            }
+        }
+        //-->
+    </script>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+    <div class="panel panel-default">
+        <!--<div class="panel-heading">
+            <h4>Edit Call List</h4>
+        </div>-->
+        <div th:if="${id == null}" > <h4>Add Call List</h4></div>
+        <div th:unless="${id == null}" > <h4>Edit Call List</h4></div>
+        <div class="panel-body">
+            <form th:object="${call_list}" th:action="@{/callListUpdate}" action="#" method="post">
+                <div class="form-group">
+                    <label for="name">Date</label>
+                    <input type="datetime-local" th:value="*{recordDate}"  th:field="*{recordDate}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label> Reference Number </label>
+                    <input type="text" th:value="*{refNumber}"  th:field="*{refNumber}" class="form-control mb-4 col-4">
+                </div>
+                <div class="form-group" th:classappend="${#fields.hasErrors('contactName')}? 'has-error':''">
+                    <label for="name">Name</label>
+                    <input type="hidden" class="form-control" id="id" th:field="*{id}"/>
+                    <span th:if="${#fields.hasErrors('contactName')}" th:errors="*{contactName}" class="text-danger"></span>
+                    <input type="text" class="form-control" id="name" th:field="*{contactName}" placeholder="Name"/>
+                </div>
+                <div class="form-group" th:classappend="${#fields.hasErrors('contactNumber')}? 'has-error':''">
+                    <label> Contact Number: &nbsp; </label><span th:if="${#fields.hasErrors('contactNumber')}" th:errors="*{contactNumber}" class="text-danger"></span>
+                    <input type="text" th:field="*{contactNumber}" placeholder="Contact Number" class="form-control">
+                </div>
+                <div class="form-group" th:classappend="${#fields.hasErrors('query')}? 'has-error':''">
+                    <label> Query: &nbsp; </label><span th:if="${#fields.hasErrors('query')}" th:errors="*{query}" class="text-danger"></span>
+                    <textarea  rows = "10" cols = "80" th:field = "*{query}" placeholder="Call Sheet" class="form-control"></textarea>
+                    <br>
+                </div>
+                <div class="form-group">
+                    <label>Staff Member</label>
+                    <select class="form-control" th:field="*{staff.staffName}" style="width: 145px">
+                        <!--<option value="">Select Staff</option>-->
+                        <option th:each="staff : ${staffList}"
+                                th:value="${staff.staffName}"
+                                th:text="${staff.staffName}">
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <table width="40%">
+                        <tr>
+                            <td><label>Action Required</label></td> <td><input id="email_action" type="checkbox" th:field="*{emailCheck}" th:checked="*{emailCheck}" onclick="checkEmailBoxes(this);"> &nbsp; Email</td> <td><input type="checkbox" th:value="Call" id="call_action" th:field="*{callCheck}" th:checked="*{callCheck}" onclick="checkCallBoxes(this);"> &nbsp; Call</td>
+                        </tr>
+                        <tr>
+                            <td><label>Status</label></td> <td><input type="checkbox" th:value="Done" id="email_status" th:field="*{emailDone}" th:checked="*{emailDone}" onclick="checkEmailBoxes(this);"> &nbsp; Done</td> <td><input type="checkbox" th:value="Done" id="call_status" th:field="*{callDone}" th:checked="*{callDone}" onclick="checkCallBoxes(this);"> &nbsp; Done</td>
+                        </tr>
+                    </table>
+                </div>
+                <button type="submit" class="btn btn-primary" value="Save">Update</button>
+                <a class="btn btn-danger" th:href="@{/callList}">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+

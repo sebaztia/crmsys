@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Steele Rose CRM Management</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+
+    <object th:include="fragments/head :: head" th:remove="tag"></object>
+
+    <link th:href="@{/assets/pages/css/profile.min.css}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div th:include="fragments/topmenuheader :: header"></div>
+
+<form action="#" th:action="@{/showReference}" th:object="${show_ref}" method="GET">
+
+<div class="content">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title">
+                            <h1 style="text-align: center; color: #0C16BF; font-weight: bold;">LINKED CLIENTS INFORMATION</h1>
+                        </strong>
+                       <!-- <div style="text-align: center; font-weight: bold">
+                            <a th:href="@{/showNewClientForm}">Create New Client</a> <br />
+                        </div>-->
+                    </div>
+                    <div class="card-body">
+                        <table align="center" width="1200px" >
+                            <tr>
+                                <td width="50%"><table width="100%" class="table table-bordered table-striped">
+                                    <tr>
+                                        <th> Date </th><!--<td>:</td>-->
+                                        <td th:text="*{recordDate}" ></td>
+                                    </tr>
+                                    <tr>
+                                        <th> Client Reference </th>
+                                        <td th:text="*{refNumber}" ></td>
+                                    </tr>
+                                    <tr>
+                                        <th> Client Name </th>
+                                        <td th:text="*{fullName}" ></td>
+                                    </tr>
+                                    <tr>
+                                        <th> Email </th>
+                                        <td th:text="*{email}" ></td>
+                                    </tr>
+                                    <tr>
+                                        <th> Call Sheet </th>
+                                        <td th:text="*{callSheet}" style="max-width: 250px;"></td>
+                                    </tr>
+
+                                </table></td> <td> &nbsp; </td>
+                                <td valign="top">
+
+
+
+
+
+                                   <!-- <div layout:fragment="content">-->
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <!--<td> ID </td>-->
+                                                <td> Record Date </td>
+                                                <td> Client Name </td>
+                                                <td>Reference Number</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:if="${linkedReference.empty}">
+                                                <td colspan="4">No Linked Clients</td>
+                                            </tr>
+                                            <tr th:each="task : ${linkedReference}">
+                                                <td th:text="${task.recordDate}">Record Date</td>
+                                                <td th:text="${task.fullName}">Full Name ...</td>
+                                                <td><a th:href="@{/showReference/{id}(id=${task.id})}" th:text="${task.refNumber}">Ref ...</a></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+
+                                </td>
+                            </tr>
+
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</form>
+<hr>
+
+<h4 class="text-center"><a th:href="@{/legacyClient}"> Back to Client List</a></h4>
+
+</body>
+</html>

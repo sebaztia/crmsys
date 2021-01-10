@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Steele Rose CRM Management</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <object th:include="fragments/head :: head" th:remove="tag"></object>
+
+    <link th:href="@{/assets/pages/css/profile.min.css}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div th:include="fragments/topmenuheader :: header"></div>
+<div class="container">
+    <p class="pull-right">
+        Welcome <span sec:authentication="principal.username">User</span>
+    </p>
+    <br/>
+    <div class="pull-right" sec:authorize="hasAuthority('ADMIN')">
+
+        <i><span sec:authentication="principal.authorities">Roles</span></i>&nbsp;
+        <a th:href="@{/settingForm}">Settings</a>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-5">
+            <div th:switch="${users}">
+                <h2 th:case="null">No users yet!</h2>
+                <div th:case="*">
+                    <h2>Users</h2>
+                    <table width="50%;">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th colspan="2">Rights</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user : ${users}">
+                            <td th:text="${user.username}"></td>
+                            <td th:text="${user.email}"></td>
+                            <td><span th:if="${!user.admin}"><a th:href="@{/makeAdmin/{id}(id=${user.id})}">Make Admin</a></span></td><td>
+                            <span th:if="${user.admin}"><a th:href="@{/removeAdmin/{id}(id=${user.id})}">Remove Admin</a></span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <h2>Staff List</h2>
+            <table width="50%;">
+                <thead>
+                <tr>
+                    <th>Staff Name</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="staff : ${staffList}">
+                    <td th:text="${staff.staffName}"></td>
+                    <td><a th:href="@{/deleteStaff/{id}(id=${staff.id})}">Delete</a></td>
+                </tr>
+                <tr>
+                    <form th:object="${staff}" th:action="@{staffSave}" action="#" method="post">
+                        <td>
+                            <div th:classappend="${#fields.hasErrors('staffName')}? 'has-error':''">
+                                <input type="text" id="name" th:field="*{staffName}" placeholder="New Staff Name"/>
+                            </div>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary" value="Save">Add</button>
+                        </td>
+                    </form>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Steele Rose CRM Management</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#data-table').DataTable();
+        });
+    </script>
+    <object th:include="fragments/head :: head" th:remove="tag"></object>
+
+    <link th:href="@{/assets/pages/css/profile.min.css}" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="page-container-bg-solid">
+<div th:include="fragments/topmenuheader :: header"></div>
+<div class="container">
+    <p class="pull-right">
+        Welcome <b><span sec:authentication="principal.username">User</span></b>
+        &nbsp;
+       <!-- <i><span sec:authentication="principal.authorities">Roles</span></i>-->
+    </p>
+    <!--<div sec:authorize="hasAnyAuthority('ADMIN', 'ROLE_USER')">
+        <a >Edit</a>
+    </div>-->
+</div>
+<div class="content">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title">
+                            <h1 style="text-align: center; color: #b300f0; font-weight: bold;">CLIENT LISTS</h1>
+                        </strong>
+                    </div>
+                    <div class="card-body">
+                        <table id="data-table" class="table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Call ID</th>
+                                <th>name</th>
+                                <th>Phone</th>
+                                <th>Contact Person</th>
+                                <th>Company Name</th>
+                                <th>Email</th>
+                                <th>Address</th>
+                                <th>Options</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+                            <tr th:each="client:${clientList}">
+                                <td th:text="${client.id}">Client ID</td>
+                                <td th:text="${client.name}">Client Name</td>
+                                <td th:text="${client.phone}">Phone</td>
+                                <td th:text="${client.contact}">Contact</td>
+                                <td th:text="${client.company.name}">Company Name</td>
+                                <td th:text="${client.email}">Email</td>
+                                <td th:text="${client.address}">Address</td>
+
+                                <td>
+                                    <a th:href="@{editClient/{id}(id=${client.id})}" class="btn btn-primary">Edit</a>
+                                    <span sec:authorize="hasAuthority('ADMIN')">
+                                    <a th:href="@{deleteClient/{id}(id=${client.id})}" class="btn btn-danger">Delete</a>
+                                    </span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div><a href="/showWillsPage" class="btn btn-default">Dashboard</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

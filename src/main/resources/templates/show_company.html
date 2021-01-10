@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Steele Rose CRM Management</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <object th:include="fragments/head :: head" th:remove="tag"></object>
+    <link th:href="@{/assets/pages/css/profile.min.css}" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#data-table').DataTable();
+        });
+    </script>
+
+    <style>
+        .scrollable {
+            overflow-x: auto;
+            overflow-y: auto;
+            height: 50px;
+            max-height: 71px;
+        }
+    </style>
+</head>
+<body class="page-container-bg-solid">
+<div th:include="fragments/topmenuheader :: header"></div>
+
+<div class="container">
+    <p class="pull-right">
+        Welcome <span sec:authentication="principal.username">User</span>
+    </p>
+</div>
+
+<form action="#" th:action="@{/showCompany}" th:object="${show_company}" method="GET">
+
+    <div class="content">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title">
+                                <h1 style="text-align: center; color: #0C16BF; font-weight: bold;">COMPANY CLIENT DETAILS</h1>
+                            </strong>
+
+                        </div>
+                        <div class="card-body">
+                            <table align="center" width="1200px" >
+                                <tr>
+                                    <td width="50%"><table width="100%" class="table table-bordered table-striped">
+                                        <tr>
+                                            <th colspan="2" style="color: green" class="text-center"> Company Info </th>
+                                        </tr>
+                                        <tr>
+                                            <th> Company Name </th><!--<td>:</td>-->
+                                            <td th:text="*{name}" ></td>
+                                        </tr>
+                                        <tr>
+                                            <th> Email </th>
+                                            <td th:text="*{email}" ></td>
+                                        </tr>
+                                        <tr>
+                                            <th> Contact Person </th>
+                                            <td th:text="*{contact}" ></td>
+                                        </tr>
+                                        <tr>
+                                            <th> Telephone </th>
+                                            <td th:text="*{telephone}" ></td>
+                                        </tr>
+                                        <tr>
+                                            <th> Address </th>
+                                            <td th:text="*{address}" style="max-width: 250px;"></td>
+                                        </tr>
+
+                                    </table></td> <td> &nbsp; </td>
+                                    <td valign="top">
+
+
+
+
+
+                                        <!-- <div layout:fragment="content">-->
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th colspan="4" style="color: green" class="text-center"> Clients List </th>
+                                            </tr>
+                                            <tr>
+                                                <!--<td> ID </td>-->
+                                                <td> Name </td>
+                                                <td> Phone  </td>
+                                                <td> Contact </td>
+                                                <td> Email </td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:if="${linkedClients.empty}">
+                                                <td colspan="4">No Clients for this Company</td>
+                                            </tr>
+                                            <tr th:each="task : ${linkedClients}">
+                                                 <!--<td th:text="${task.id}">1</td>-->
+                                                <td th:text="${task.name}">Record Date</td>
+                                                <!--<td th:text="${#dates.format(task.recordDate, 'dd-MM-yyyy HH:MM')}">Record Date</td>
+                                                <td><a href="view.html" th:href="@{'/' + ${task.id}}" th:text="${task.id}">Title ...</a></td>
+                                                <td th:text="${#calendars.format(task.recordDate)}">July 11, 2012 2:17:16 PM CDT</td>-->
+                                                <td th:text="${task.phone}"></td>
+                                                <td th:text="${task.contact}"></td>
+                                                <td th:text="${task.email}"></td>
+                                               <!-- <td><a th:href="@{/showReference/{id}(id=${task.id})}" th:text="${task.refNumber}">Ref ...</a></td>
+                                          -->  </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <!--<a href="/client/add" class="btn btn-success">Add Client</a>-->
+                                        <a th:href="@{/clientAdd/{id}(id=*{id})}" class="btn btn-success">Add Client</a>
+                                        <a th:class="pull-right" href="/showWillsPage" class="btn btn-default">Dashboard</a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-danger navbar-right" th:href="@{/company}">Cancel</a>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+<hr>
+
+
+</body>
+</html>
