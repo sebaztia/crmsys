@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `company` (
     `id` bigint NOT NULL AUTO_INCREMENT,
     `contact` varchar(25) NOT NULL,
     `email` varchar(30) NOT NULL,
-    `name` varchar(255) NOT NULL,
+    `name` varchar(50) NOT NULL,
     `telephone` varchar(15) NOT NULL,
     `website` varchar(50) DEFAULT NULL,
     `address` varchar(455) DEFAULT NULL,
@@ -56,8 +56,8 @@ CREATE TABLE IF NOT EXISTS `company` (
 
 CREATE TABLE IF NOT EXISTS `client` (
     `id` bigint NOT NULL AUTO_INCREMENT,
-    `name` varchar(255) NOT NULL,
-    `address` varchar(255) DEFAULT NULL,
+    `name` varchar(50) NOT NULL,
+    `address` varchar(455) DEFAULT NULL,
     `contact` varchar(25) NOT NULL,
     `email` varchar(30) DEFAULT NULL,
     `phone` varchar(15) NOT NULL,

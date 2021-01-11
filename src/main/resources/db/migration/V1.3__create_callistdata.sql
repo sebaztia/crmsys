@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS `staff` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
-    `staff_name` varchar(255) NOT NULL,
+    `staff_name` varchar(25) NOT NULL,
     PRIMARY KEY (`id`)
     ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
@@ -11,13 +11,13 @@ CREATE TABLE IF NOT EXISTS `call_list` (
                              `archive` bit(1) DEFAULT NULL,
                              `call_check` bit(1) DEFAULT NULL,
                              `call_done` bit(1) DEFAULT NULL,
-                             `contact_name` varchar(255) DEFAULT NULL,
-                             `contact_number` varchar(255) DEFAULT NULL,
+                             `contact_name` varchar(50) DEFAULT NULL,
+                             `contact_number` varchar(15) DEFAULT NULL,
                              `email_check` bit(1) DEFAULT NULL,
                              `email_done` bit(1) DEFAULT NULL,
-                             `query` varchar(255) DEFAULT NULL,
+                             `query` varchar(2550) DEFAULT NULL,
                              `record_date` datetime DEFAULT NULL,
-                             `ref_number` varchar(255) DEFAULT NULL,
+                             `ref_number` varchar(25) DEFAULT NULL,
     `staff_id` int(11) NOT NULL,
                              PRIMARY KEY (`id`),
     KEY `FK1mtsbur82frn64de7balymq9z` (`staff_id`),
@@ -28,13 +28,13 @@ CREATE TABLE IF NOT EXISTS `call_list` (
 CREATE TABLE IF NOT EXISTS `legacy_client` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `call_id` int(11) NOT NULL,
-    `call_sheet` varchar(255) DEFAULT NULL,
-    `contact_number` varchar(255) DEFAULT NULL,
-    `email` varchar(255) DEFAULT NULL,
-    `full_name` varchar(255) DEFAULT NULL,
+    `call_sheet` varchar(2550) DEFAULT NULL,
+    `contact_number` varchar(15) DEFAULT NULL,
+    `email` varchar(50) DEFAULT NULL,
+    `full_name` varchar(55) DEFAULT NULL,
     `record_date` datetime DEFAULT NULL,
-    `ref_number` varchar(255) DEFAULT NULL,
-    `staff_name` varchar(255) DEFAULT NULL,
+    `ref_number` varchar(25) DEFAULT NULL,
+    `staff_name` varchar(25) DEFAULT NULL,
     `created_at` datetime DEFAULT NULL,
     `updated_at` datetime DEFAULT NULL,
     PRIMARY KEY (`id`)
