@@ -4,6 +4,9 @@ import com.crm.model.User;
 import com.crm.dto.UserRegistrationDto;
 import com.crm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,7 +41,18 @@ public class UserController {
 
     @GetMapping(value = "/")
     public String home(Model model) {
-        return "home";
+        if (isAuthenticated()) {
+            return "redirect:home";
+        }
+        return "login";
+    }
+    private boolean isAuthenticated() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || AnonymousAuthenticationToken.class.
+                isAssignableFrom(authentication.getClass())) {
+            return false;
+        }
+        return authentication.isAuthenticated();
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
