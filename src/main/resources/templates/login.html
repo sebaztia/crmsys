@@ -51,6 +51,9 @@
                                     <input type="submit" name="login-submit" id="login-submit" tabindex="4"
                                            class="form-control btn btn-login" value="Log In">
                                 </div>
+                                <p>
+                                    <a th:href="@{/forgot_password}"> Forgot your password?</a>
+                                </p>
                             </form>
                             <form id="register-form" method="post" th:action="@{/registration}" th:object="${user}"
                                   style="display: none;">

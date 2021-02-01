@@ -88,6 +88,31 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
+    public void updateResetPassword(String token, String email) throws UsernameNotFoundException{
+        User user = userRepository.findByEmail(email);
+
+        if (user != null) {
+            user.setResetPasswordToken(token);
+            userRepository.save(user);
+        } else {
+            throw new UsernameNotFoundException("Invalid email." + email);
+        }
+    }
+
+    @Override
+    public User getUserByPasswordToken(String token) {
+        return userRepository.findByResetPasswordToken(token);
+    }
+
+    @Override
+    public void updatePassword(User user, String newPassword) {
+        user.setPassword(passwordEncoder.encode(newPassword));
+        user.setResetPasswordToken(null);
+
+        userRepository.save(user);
+    }
+
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
         return roles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
